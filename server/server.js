@@ -21,6 +21,8 @@ const allowedOrigins = CLIENT_URL
   ? CLIENT_URL.split(',').map((s) => s.trim()).filter(Boolean)
   : ['http://localhost:5173', 'http://localhost:3000'];
 
+console.log('Allowed CORS origins:', allowedOrigins);
+
 // Socket.io setup
 const io = new Server(server, {
   cors: {
@@ -33,16 +35,18 @@ const io = new Server(server, {
 // Make io accessible in controllers via req.app.get('io')
 app.set('io', io);
 
-// Security headers
-app.use(helmet());
-
-// CORS
+// CORS — must be BEFORE helmet so preflight OPTIONS requests get handled
 app.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
+// Security headers
+app.use(helmet());
 
 // Request logging
 if (NODE_ENV === 'development') {
