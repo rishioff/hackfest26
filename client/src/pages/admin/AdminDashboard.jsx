@@ -89,7 +89,7 @@ export default function AdminDashboard() {
               <ClockIcon className="w-8 h-8 opacity-80" />
               <div>
                 <p className="text-sm opacity-80">Hackathon Timer</p>
-                <p className="text-3xl font-mono font-bold tracking-wider">{formatDuration(totalSeconds)}</p>
+                <p className="text-2xl sm:text-3xl font-mono font-bold tracking-wider">{formatDuration(totalSeconds)}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">

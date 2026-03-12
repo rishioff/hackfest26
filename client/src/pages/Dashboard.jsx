@@ -56,7 +56,7 @@ function TimerDisplay() {
         )}
       </div>
       <div className="text-center">
-        <div className="font-mono text-5xl font-bold tracking-wider text-gray-900 dark:text-white">
+        <div className="font-mono text-3xl sm:text-5xl font-bold tracking-wider text-gray-900 dark:text-white">
           {formatDuration(totalSeconds)}
         </div>
         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -169,10 +169,10 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1">
-            <nav className="card p-3 space-y-1 sticky top-24">
+            <nav className="card p-3 space-y-1 sticky top-24 overflow-x-auto">
               <NavLink to="/dashboard" icon={ChartBarIcon} label="Dashboard" />
               <NavLink to="/notifications" icon={BellIcon} label="Notifications" badge={unreadCount} />
               <NavLink to="/profile" icon={UserCircleIcon} label="Profile" />

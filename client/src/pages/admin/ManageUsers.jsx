@@ -119,22 +119,47 @@ export default function ManageUsers() {
               <p className="text-gray-500 dark:text-gray-400">No users found</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <>
+            {/* Mobile card view */}
+            <div className="sm:hidden divide-y divide-gray-100 dark:divide-gray-800">
+              {filteredUsers.map((u) => (
+                <div key={u._id} className="p-4 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-bold text-white">{u.name?.charAt(0)?.toUpperCase() || '?'}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-900 dark:text-white truncate">{u.name}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{u.email}</p>
+                    </div>
+                    <span className={cn('badge text-xs', ROLE_COLORS[u.role])}>{ROLE_LABELS[u.role] || u.role}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-400">{formatDate(u.createdAt)}</span>
+                    <select
+                      value={u.role}
+                      onChange={(e) => handleRoleChange(u._id, e.target.value)}
+                      disabled={updatingId === u._id}
+                      className="input-field w-auto text-sm py-1 px-2"
+                    >
+                      <option value={ROLES.STUDENT}>Student</option>
+                      <option value={ROLES.JUDGE}>Judge</option>
+                      <option value={ROLES.SUPERADMIN}>Admin</option>
+                    </select>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop table view */}
+            <div className="hidden sm:block overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200 dark:border-gray-800">
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      User
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Role
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Joined
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Role</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Joined</th>
+                    <th className="px-6 py-3 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -143,9 +168,7 @@ export default function ManageUsers() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-sm font-bold text-white">
-                              {u.name?.charAt(0)?.toUpperCase() || '?'}
-                            </span>
+                            <span className="text-sm font-bold text-white">{u.name?.charAt(0)?.toUpperCase() || '?'}</span>
                           </div>
                           <div>
                             <p className="font-medium text-gray-900 dark:text-white">{u.name}</p>
@@ -154,13 +177,9 @@ export default function ManageUsers() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={cn('badge text-xs', ROLE_COLORS[u.role])}>
-                          {ROLE_LABELS[u.role] || u.role}
-                        </span>
+                        <span className={cn('badge text-xs', ROLE_COLORS[u.role])}>{ROLE_LABELS[u.role] || u.role}</span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        {formatDate(u.createdAt)}
-                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{formatDate(u.createdAt)}</td>
                       <td className="px-6 py-4 text-right">
                         <select
                           value={u.role}
@@ -178,6 +197,7 @@ export default function ManageUsers() {
                 </tbody>
               </table>
             </div>
+            </>
           )}
         </div>
       </div>

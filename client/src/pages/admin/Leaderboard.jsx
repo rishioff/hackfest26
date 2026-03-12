@@ -54,13 +54,13 @@ export default function Leaderboard() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8">
           <Link to="/dashboard" className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
             <ArrowLeftIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
           </Link>
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <TrophyIcon className="w-7 h-7 text-amber-500" />
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <TrophyIcon className="w-6 h-6 sm:w-7 sm:h-7 text-amber-500 flex-shrink-0" />
               Leaderboard
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">Team rankings by evaluation scores</p>
@@ -68,10 +68,11 @@ export default function Leaderboard() {
           <button
             onClick={handleExport}
             disabled={exporting}
-            className="btn-secondary gap-1.5"
+            className="btn-secondary gap-1.5 text-sm"
           >
             <ArrowDownTrayIcon className="w-4 h-4" />
-            {exporting ? 'Exporting...' : 'Export CSV'}
+            <span className="hidden sm:inline">{exporting ? 'Exporting...' : 'Export CSV'}</span>
+            <span className="sm:hidden">{exporting ? '...' : 'CSV'}</span>
           </button>
         </div>
 
@@ -132,7 +133,7 @@ export default function Leaderboard() {
 
                 {/* Score */}
                 <div className="text-right flex-shrink-0">
-                  <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                  <p className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
                     {formatScore(entry.averageScore || entry.totalScore || entry.score || 0)}
                   </p>
                   <p className="text-xs text-gray-400">

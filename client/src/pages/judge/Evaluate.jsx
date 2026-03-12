@@ -15,19 +15,19 @@ import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 
 function ScoreInput({ criterion, value, onChange }) {
   return (
-    <div className="card p-5">
+    <div className="card p-4 sm:p-5">
       <div className="flex items-start justify-between mb-3">
-        <div>
-          <h4 className="font-medium text-gray-900 dark:text-white">{criterion.label}</h4>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{criterion.description}</p>
+        <div className="min-w-0">
+          <h4 className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{criterion.label}</h4>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">{criterion.description}</p>
         </div>
-        <span className="text-2xl font-bold text-primary-600 dark:text-primary-400 ml-4 flex-shrink-0">
+        <span className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400 ml-3 flex-shrink-0">
           {value}/{criterion.maxScore}
         </span>
       </div>
 
-      {/* Star rating */}
-      <div className="flex items-center gap-1">
+      {/* Star rating — hidden on very small screens, shown on sm+ */}
+      <div className="hidden sm:flex items-center gap-1">
         {Array.from({ length: criterion.maxScore }, (_, i) => (
           <button
             key={i}
@@ -36,15 +36,15 @@ function ScoreInput({ criterion, value, onChange }) {
             className="p-0.5 transition-transform hover:scale-110"
           >
             {i < value ? (
-              <StarIconSolid className="w-7 h-7 text-amber-400" />
+              <StarIconSolid className="w-6 h-6 sm:w-7 sm:h-7 text-amber-400" />
             ) : (
-              <StarIcon className="w-7 h-7 text-gray-300 dark:text-gray-600" />
+              <StarIcon className="w-6 h-6 sm:w-7 sm:h-7 text-gray-300 dark:text-gray-600" />
             )}
           </button>
         ))}
       </div>
 
-      {/* Slider fallback */}
+      {/* Slider — always visible on mobile, fallback on desktop */}
       <input
         type="range"
         min={0}
@@ -158,14 +158,14 @@ export default function Evaluate() {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               {existingEvaluation ? 'Update Evaluation' : 'Evaluate Team'}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{team?.name || 'Team'}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{team?.teamName || team?.name || 'Team'}</p>
           </div>
         </div>
 
         {/* Team Summary */}
         {team && (
-          <div className="card p-6 mb-6 animate-fade-in">
-            <h2 className="font-semibold text-gray-900 dark:text-white mb-2">{team.name}</h2>
+          <div className="card p-4 sm:p-6 mb-6 animate-fade-in">
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-2">{team.teamName || team.name}</h2>
             {team.description && (
               <p className="text-sm text-gray-600 dark:text-gray-400">{team.description}</p>
             )}
@@ -227,11 +227,11 @@ export default function Evaluate() {
           </div>
 
           {/* Submit */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 btn-primary py-3 text-lg gap-2"
+              className="flex-1 btn-primary py-3 text-base sm:text-lg gap-2"
             >
               {submitting ? (
                 <span className="flex items-center justify-center gap-2">
@@ -248,7 +248,7 @@ export default function Evaluate() {
                 </>
               )}
             </button>
-            <Link to="/assignments" className="btn-secondary py-3 px-6 text-lg">
+            <Link to="/assignments" className="btn-secondary py-3 px-6 text-base sm:text-lg text-center">
               Cancel
             </Link>
           </div>
